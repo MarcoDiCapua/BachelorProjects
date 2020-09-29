@@ -1,15 +1,20 @@
 package tableModels;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.table.DefaultTableModel;
 
 import dataModel.Book;
+import dataModel.Booking;
 import dataModel.Category;
+import dataModel.User;
 
 /**
  * This class is a definition of DefaultTableModel that store in the cell all
- * books rank information. The rows shown by this model are 25 per pages.
+ * the information of a user booking. The rows shown by this model are 25 per
+ * pages.
  * 
  * @author Marco Di Capua
  * @author Mattia Lo Schiavo
@@ -17,22 +22,71 @@ import dataModel.Category;
  * @author Riccardo Zorzi
  * @version 1.0
  */
-public class RankTableModel extends DefaultTableModel {
+public class BookingTableModel extends DefaultTableModel {
 	private static final long serialVersionUID = 1L;
-	private static final String[] HEADER = { "Posizione", "Titolo", "Autori", "ISBN", "Categoria", "Lingua",
-			"Anno pubblicazione", "Anno ristampa", "Casa editrice", "Scaffale" };
-	private ArrayList<Book> books;
+	private static final String[] HEADER = { "Titolo", "Autori", "ISBN", "Categoria", "Data prenotazione" };
+	private ArrayList<Booking> bookings;
 
 	/**
-	 * Create a new object <code>AlBooksTableModel</code> with the informations
-	 * contains in the books list
+	 * Create a new object <code>BookingTableModel</code> with the informations
+	 * contains in the bookings list
 	 * 
-	 * @param books
-	 *            the list contains the books to be shown
+	 * @param bookings
+	 *            the list contains the bookings to be shown
 	 */
-	public RankTableModel(ArrayList<Book> books) {
+	public BookingTableModel(ArrayList<Booking> bookings) {
 		super();
-		this.books = books;
+		this.bookings = bookings;
+	}
+
+	/**
+	 * Add a booking to the model
+	 * 
+	 * @param booking
+	 *            the booking to add
+	 */
+	public void addBooking(Booking booking) {
+		this.bookings.add(booking);
+		int row = bookings.size() - 1;
+		fireTableRowsInserted(row, row);
+	}
+
+	/**
+	 * Create and add to the model a new booking with the given user and book, and
+	 * the current date
+	 * 
+	 * @param book
+	 *            the book to booking
+	 * @param user
+	 *            the user that book the book
+	 */
+	public void addBooking(Book book, User user) {
+		Booking booking = new Booking(book, user, new GregorianCalendar());
+		this.bookings.add(booking);
+		int row = bookings.size() - 1;
+		fireTableRowsInserted(row, row);
+	}
+
+	/**
+	 * Remove the booking at the given row from the model
+	 * 
+	 * @param row
+	 *            the row to remove
+	 */
+	public void removeRow(int row) {
+		this.bookings.remove(row);
+		fireTableRowsDeleted(row, row);
+	}
+
+	/**
+	 * Return the booking at the given row, if exists
+	 * 
+	 * @param row
+	 *            the row whose booking is to be queried
+	 * @return the booking at the given row
+	 */
+	public Booking getBookingAtRow(int row) {
+		return bookings.get(row);
 	}
 
 	/**
@@ -52,10 +106,10 @@ public class RankTableModel extends DefaultTableModel {
 	 */
 	@Override
 	public int getRowCount() {
-		if (this.books == null) {
+		if (this.bookings == null) {
 			return 0;
 		} else {
-			return books.size();
+			return bookings.size();
 		}
 	}
 
@@ -70,28 +124,18 @@ public class RankTableModel extends DefaultTableModel {
 	 */
 	@Override
 	public Object getValueAt(int row, int column) {
-		Book book = this.books.get(row);
+		Booking booking = bookings.get(row);
 		switch (column) {
 		case 0:
-			return row + 1;
+			return booking.getBook().getTitle();
 		case 1:
-			return book.getTitle();
+			return booking.getBook().getAuthors();
 		case 2:
-			return book.getAuthors();
+			return booking.getBook().getIsbn();
 		case 3:
-			return book.getIsbn();
+			return booking.getBook().getCategory();
 		case 4:
-			return book.getCategory();
-		case 5:
-			return book.getLanguage();
-		case 6:
-			return book.getPublicationYear();
-		case 7:
-			return book.getReprintYear();
-		case 8:
-			return book.getPublishingHouse();
-		case 9:
-			return book.getBookcase();
+			return booking.getBookingDate().getTime();
 		}
 
 		return null;
@@ -114,19 +158,9 @@ public class RankTableModel extends DefaultTableModel {
 		case 2:
 			return String.class;
 		case 3:
-			return String.class;
-		case 4:
 			return Category.class;
-		case 5:
-			return String.class;
-		case 6:
-			return String.class;
-		case 7:
-			return String.class;
-		case 8:
-			return String.class;
-		case 9:
-			return String.class;
+		case 4:
+			return Date.class;
 		}
 		return Object.class;
 	}

@@ -1,15 +1,16 @@
 package tableModels;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.table.DefaultTableModel;
 
-import dataModel.Book;
 import dataModel.Category;
+import dataModel.Loan;
 
 /**
  * This class is a definition of DefaultTableModel that store in the cell all
- * books rank information. The rows shown by this model are 25 per pages.
+ * the information of a user loan.
  * 
  * @author Marco Di Capua
  * @author Mattia Lo Schiavo
@@ -17,22 +18,60 @@ import dataModel.Category;
  * @author Riccardo Zorzi
  * @version 1.0
  */
-public class RankTableModel extends DefaultTableModel {
+public class LoanTableModel extends DefaultTableModel {
 	private static final long serialVersionUID = 1L;
-	private static final String[] HEADER = { "Posizione", "Titolo", "Autori", "ISBN", "Categoria", "Lingua",
-			"Anno pubblicazione", "Anno ristampa", "Casa editrice", "Scaffale" };
-	private ArrayList<Book> books;
+	private static final String[] HEADER = { "Titolo", "Autori", "ISBN", "Categoria", "Data prestito",
+			"Data restituzione" };
+	private ArrayList<Loan> loans;
 
 	/**
-	 * Create a new object <code>AlBooksTableModel</code> with the informations
-	 * contains in the books list
+	 * Create a new object <code>LoanTableModel</code> with the informations
+	 * contains in the loans list
 	 * 
-	 * @param books
-	 *            the list contains the books to be shown
+	 * @param loans
+	 *            the list contains the loans to be shown
 	 */
-	public RankTableModel(ArrayList<Book> books) {
+	public LoanTableModel(ArrayList<Loan> loans) {
 		super();
-		this.books = books;
+		this.loans = loans;
+	}
+
+	/**
+	 * Return the loan at the given row, if exists
+	 * 
+	 * @param row
+	 *            the row whose loan is to be queried
+	 * @return the loan at the given row
+	 */
+	public Loan getLoanAtRow(int row) {
+		if (row > -1 && row < loans.size()) {
+			return this.loans.get(row);
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Add a loan to the model
+	 * 
+	 * @param loan
+	 *            the loan to add
+	 */
+	public void addLoan(Loan loan) {
+		this.loans.add(loan);
+		int row = loans.size() - 1;
+		fireTableRowsInserted(row, row);
+	}
+
+	/**
+	 * Remove the loan at the given row from the model
+	 * 
+	 * @param row
+	 *            the row to remove
+	 */
+	public void removeRow(int row) {
+		this.loans.remove(row);
+		fireTableRowsDeleted(row, row);
 	}
 
 	/**
@@ -52,10 +91,10 @@ public class RankTableModel extends DefaultTableModel {
 	 */
 	@Override
 	public int getRowCount() {
-		if (this.books == null) {
+		if (this.loans == null) {
 			return 0;
 		} else {
-			return books.size();
+			return loans.size();
 		}
 	}
 
@@ -70,28 +109,20 @@ public class RankTableModel extends DefaultTableModel {
 	 */
 	@Override
 	public Object getValueAt(int row, int column) {
-		Book book = this.books.get(row);
+		Loan loan = loans.get(row);
 		switch (column) {
 		case 0:
-			return row + 1;
+			return loan.getBook().getTitle();
 		case 1:
-			return book.getTitle();
+			return loan.getBook().getAuthors();
 		case 2:
-			return book.getAuthors();
+			return loan.getBook().getIsbn();
 		case 3:
-			return book.getIsbn();
+			return loan.getBook().getCategory();
 		case 4:
-			return book.getCategory();
+			return loan.getLoanDate().getTime();
 		case 5:
-			return book.getLanguage();
-		case 6:
-			return book.getPublicationYear();
-		case 7:
-			return book.getReprintYear();
-		case 8:
-			return book.getPublishingHouse();
-		case 9:
-			return book.getBookcase();
+			return loan.getReturnDate().getTime();
 		}
 
 		return null;
@@ -114,19 +145,11 @@ public class RankTableModel extends DefaultTableModel {
 		case 2:
 			return String.class;
 		case 3:
-			return String.class;
-		case 4:
 			return Category.class;
+		case 4:
+			return Date.class;
 		case 5:
-			return String.class;
-		case 6:
-			return String.class;
-		case 7:
-			return String.class;
-		case 8:
-			return String.class;
-		case 9:
-			return String.class;
+			return Date.class;
 		}
 		return Object.class;
 	}

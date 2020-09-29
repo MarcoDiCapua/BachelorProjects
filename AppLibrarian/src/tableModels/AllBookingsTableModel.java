@@ -1,15 +1,16 @@
 package tableModels;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.table.DefaultTableModel;
 
-import dataModel.Book;
+import dataModel.Booking;
 import dataModel.Category;
 
 /**
  * This class is a definition of DefaultTableModel that store in the cell all
- * books rank information. The rows shown by this model are 25 per pages.
+ * bookings information. The rows shown by this model are 25 per pages.
  * 
  * @author Marco Di Capua
  * @author Mattia Lo Schiavo
@@ -17,22 +18,22 @@ import dataModel.Category;
  * @author Riccardo Zorzi
  * @version 1.0
  */
-public class RankTableModel extends DefaultTableModel {
+public class AllBookingsTableModel extends DefaultTableModel {
 	private static final long serialVersionUID = 1L;
-	private static final String[] HEADER = { "Posizione", "Titolo", "Autori", "ISBN", "Categoria", "Lingua",
-			"Anno pubblicazione", "Anno ristampa", "Casa editrice", "Scaffale" };
-	private ArrayList<Book> books;
+	private static final String[] HEADER = { "Cod. Fiscale", "Nome", "Cognome", "Titolo", "Autori", "ISBN", "Categoria",
+			"Data prenotazione" };
+	private ArrayList<Booking> bookings;
 
 	/**
-	 * Create a new object <code>AlBooksTableModel</code> with the informations
-	 * contains in the books list
+	 * Create a new object <code>AllBookingsTableModel</code> with the informations
+	 * contains in the bookings list
 	 * 
-	 * @param books
-	 *            the list contains the books to be shown
+	 * @param bookings
+	 *            the list contains the bookings to be shown
 	 */
-	public RankTableModel(ArrayList<Book> books) {
+	public AllBookingsTableModel(ArrayList<Booking> bookings) {
 		super();
-		this.books = books;
+		this.bookings = bookings;
 	}
 
 	/**
@@ -52,10 +53,10 @@ public class RankTableModel extends DefaultTableModel {
 	 */
 	@Override
 	public int getRowCount() {
-		if (this.books == null) {
+		if (this.bookings == null) {
 			return 0;
 		} else {
-			return books.size();
+			return bookings.size();
 		}
 	}
 
@@ -70,28 +71,24 @@ public class RankTableModel extends DefaultTableModel {
 	 */
 	@Override
 	public Object getValueAt(int row, int column) {
-		Book book = this.books.get(row);
+		Booking booking = bookings.get(row);
 		switch (column) {
 		case 0:
-			return row + 1;
+			return booking.getUser().getFiscalCode();
 		case 1:
-			return book.getTitle();
+			return booking.getUser().getName();
 		case 2:
-			return book.getAuthors();
+			return booking.getUser().getSurname();
 		case 3:
-			return book.getIsbn();
+			return booking.getBook().getTitle();
 		case 4:
-			return book.getCategory();
+			return booking.getBook().getAuthors();
 		case 5:
-			return book.getLanguage();
+			return booking.getBook().getIsbn();
 		case 6:
-			return book.getPublicationYear();
+			return booking.getBook().getCategory();
 		case 7:
-			return book.getReprintYear();
-		case 8:
-			return book.getPublishingHouse();
-		case 9:
-			return book.getBookcase();
+			return booking.getBookingDate().getTime();
 		}
 
 		return null;
@@ -116,17 +113,13 @@ public class RankTableModel extends DefaultTableModel {
 		case 3:
 			return String.class;
 		case 4:
-			return Category.class;
+			return String.class;
 		case 5:
 			return String.class;
 		case 6:
-			return String.class;
+			return Category.class;
 		case 7:
-			return String.class;
-		case 8:
-			return String.class;
-		case 9:
-			return String.class;
+			return Date.class;
 		}
 		return Object.class;
 	}

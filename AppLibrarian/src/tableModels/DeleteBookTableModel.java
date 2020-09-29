@@ -9,7 +9,8 @@ import dataModel.Category;
 
 /**
  * This class is a definition of DefaultTableModel that store in the cell all
- * books rank information. The rows shown by this model are 25 per pages.
+ * the information needed to delete a book. The rows shown by this model are 25
+ * per pages.
  * 
  * @author Marco Di Capua
  * @author Mattia Lo Schiavo
@@ -17,22 +18,41 @@ import dataModel.Category;
  * @author Riccardo Zorzi
  * @version 1.0
  */
-public class RankTableModel extends DefaultTableModel {
+public class DeleteBookTableModel extends DefaultTableModel {
 	private static final long serialVersionUID = 1L;
-	private static final String[] HEADER = { "Posizione", "Titolo", "Autori", "ISBN", "Categoria", "Lingua",
-			"Anno pubblicazione", "Anno ristampa", "Casa editrice", "Scaffale" };
-	private ArrayList<Book> books;
+	private static final String[] HEADER = { "Elimina", "Titolo", "Autori", "ISBN", "Categoria" };
+	private ArrayList<Book> booksList;
+	private Object[][] books;
 
 	/**
-	 * Create a new object <code>AlBooksTableModel</code> with the informations
+	 * Create a new object <code>DeleteBookTableModel</code> with the informations
 	 * contains in the books list
 	 * 
-	 * @param books
+	 * @param booksList
 	 *            the list contains the books to be shown
 	 */
-	public RankTableModel(ArrayList<Book> books) {
+	public DeleteBookTableModel(ArrayList<Book> booksList) {
 		super();
-		this.books = books;
+		this.booksList = booksList;
+		this.books = new Object[booksList.size()][5];
+		for (int i = 0; i < booksList.size(); i++) {
+			books[i][0] = Boolean.FALSE;
+			books[i][1] = booksList.get(i).getTitle();
+			books[i][2] = booksList.get(i).getAuthors();
+			books[i][3] = booksList.get(i).getIsbn();
+			books[i][4] = booksList.get(i).getCategory();
+		}
+	}
+
+	/**
+	 * Sets true the check box value at the given row
+	 * 
+	 * @param row
+	 *            the row to select
+	 */
+	public void selectRow(int row) {
+		books[row][0] = Boolean.TRUE;
+		fireTableRowsUpdated(row, row);
 	}
 
 	/**
@@ -52,10 +72,25 @@ public class RankTableModel extends DefaultTableModel {
 	 */
 	@Override
 	public int getRowCount() {
-		if (this.books == null) {
+		if (this.booksList == null) {
 			return 0;
 		} else {
-			return books.size();
+			return booksList.size();
+		}
+	}
+
+	/**
+	 * Returns the book at the given row, if exists
+	 * 
+	 * @param row
+	 *            the row whose book is to be queried
+	 * @return the book at the given row
+	 */
+	public Book getBookAtRow(int row) {
+		if (row > -1 && row < booksList.size()) {
+			return this.booksList.get(row);
+		} else {
+			return null;
 		}
 	}
 
@@ -70,10 +105,10 @@ public class RankTableModel extends DefaultTableModel {
 	 */
 	@Override
 	public Object getValueAt(int row, int column) {
-		Book book = this.books.get(row);
+		Book book = this.booksList.get(row);
 		switch (column) {
 		case 0:
-			return row + 1;
+			return books[row][0];
 		case 1:
 			return book.getTitle();
 		case 2:
@@ -82,19 +117,38 @@ public class RankTableModel extends DefaultTableModel {
 			return book.getIsbn();
 		case 4:
 			return book.getCategory();
-		case 5:
-			return book.getLanguage();
-		case 6:
-			return book.getPublicationYear();
-		case 7:
-			return book.getReprintYear();
-		case 8:
-			return book.getPublishingHouse();
-		case 9:
-			return book.getBookcase();
 		}
 
 		return null;
+	}
+
+	/**
+	 * Sets the object value for the cell at column and row. Value is the new value.
+	 * This method will generate a tableChanged notification.
+	 * 
+	 * @param value
+	 *            the new value
+	 * @param row
+	 *            the row whose value is to be changed
+	 * @param column
+	 *            the column whose value is to be changed
+	 */
+	@Override
+	public void setValueAt(Object value, int row, int column) {
+		Book book = this.booksList.get(row);
+		switch (column) {
+		case 0:
+			books[row][0] = value;
+		case 1:
+			books[row][1] = book.getTitle();
+		case 2:
+			books[row][2] = book.getAuthors();
+		case 3:
+			books[row][3] = book.getIsbn();
+		case 4:
+			books[row][4] = book.getCategory();
+		}
+		fireTableRowsUpdated(row, row);
 	}
 
 	/**
@@ -108,7 +162,7 @@ public class RankTableModel extends DefaultTableModel {
 	public Class<?> getColumnClass(int columnIndex) {
 		switch (columnIndex) {
 		case 0:
-			return String.class;
+			return Boolean.class;
 		case 1:
 			return String.class;
 		case 2:
@@ -117,16 +171,7 @@ public class RankTableModel extends DefaultTableModel {
 			return String.class;
 		case 4:
 			return Category.class;
-		case 5:
-			return String.class;
-		case 6:
-			return String.class;
-		case 7:
-			return String.class;
-		case 8:
-			return String.class;
-		case 9:
-			return String.class;
+
 		}
 		return Object.class;
 	}
@@ -148,17 +193,16 @@ public class RankTableModel extends DefaultTableModel {
 	}
 
 	/**
-	 * Returns false regardless of parameter values.
+	 * Returns true for all the cells at the first column, false otherwise.
 	 * 
 	 * @param rowIndex
 	 *            the row whose value is to be queried
 	 * @param columnIndex
 	 *            the column whose value is to be queried
-	 * @return false
+	 * @return true if column is equal to 0, false otherwise
 	 */
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return false;
+		return columnIndex == 0;
 	}
-
 }

@@ -1,6 +1,7 @@
 package tableModels;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -9,7 +10,7 @@ import dataModel.Category;
 
 /**
  * This class is a definition of DefaultTableModel that store in the cell all
- * books rank information. The rows shown by this model are 25 per pages.
+ * books information. The rows shown by this model are 25 per pages.
  * 
  * @author Marco Di Capua
  * @author Mattia Lo Schiavo
@@ -17,10 +18,10 @@ import dataModel.Category;
  * @author Riccardo Zorzi
  * @version 1.0
  */
-public class RankTableModel extends DefaultTableModel {
+public class AllBooksTableModel extends DefaultTableModel {
 	private static final long serialVersionUID = 1L;
-	private static final String[] HEADER = { "Posizione", "Titolo", "Autori", "ISBN", "Categoria", "Lingua",
-			"Anno pubblicazione", "Anno ristampa", "Casa editrice", "Scaffale" };
+	private static final String[] HEADER = { "Titolo", "Autori", "ISBN", "Categoria", "Lingua", "Casa editrice",
+			"Anno pubblicazione", "Anno ristampa", "Scaffale" };
 	private ArrayList<Book> books;
 
 	/**
@@ -30,9 +31,33 @@ public class RankTableModel extends DefaultTableModel {
 	 * @param books
 	 *            the list contains the books to be shown
 	 */
-	public RankTableModel(ArrayList<Book> books) {
+	public AllBooksTableModel(List<Book> books) {
 		super();
-		this.books = books;
+		this.books = new ArrayList<Book>(books);
+
+	}
+
+	/**
+	 * Add a book to the model
+	 * 
+	 * @param book
+	 *            the book to add
+	 */
+	public void addBook(Book book) {
+		this.books.add(book);
+		int row = books.size() - 1;
+		fireTableRowsInserted(row, row);
+	}
+
+	/**
+	 * Remove the book at the given row from the model
+	 * 
+	 * @param row
+	 *            the row to remove
+	 */
+	public void removeRow(int row) {
+		this.books.remove(row);
+		fireTableRowsDeleted(row, row);
 	}
 
 	/**
@@ -55,7 +80,22 @@ public class RankTableModel extends DefaultTableModel {
 		if (this.books == null) {
 			return 0;
 		} else {
-			return books.size();
+			return this.books.size();
+		}
+	}
+
+	/**
+	 * Return the book at the given row, if exists
+	 * 
+	 * @param row
+	 *            the row whose book is to be queried
+	 * @return the book at the given row
+	 */
+	public Book getBookAtRow(int row) {
+		if (row > -1 && row < books.size()) {
+			return books.get(row);
+		} else {
+			return null;
 		}
 	}
 
@@ -70,27 +110,25 @@ public class RankTableModel extends DefaultTableModel {
 	 */
 	@Override
 	public Object getValueAt(int row, int column) {
-		Book book = this.books.get(row);
+		Book book = books.get(row);
 		switch (column) {
 		case 0:
-			return row + 1;
-		case 1:
 			return book.getTitle();
-		case 2:
+		case 1:
 			return book.getAuthors();
-		case 3:
+		case 2:
 			return book.getIsbn();
-		case 4:
+		case 3:
 			return book.getCategory();
-		case 5:
+		case 4:
 			return book.getLanguage();
+		case 5:
+			return book.getPublishingHouse();
 		case 6:
 			return book.getPublicationYear();
 		case 7:
 			return book.getReprintYear();
 		case 8:
-			return book.getPublishingHouse();
-		case 9:
 			return book.getBookcase();
 		}
 
@@ -114,9 +152,9 @@ public class RankTableModel extends DefaultTableModel {
 		case 2:
 			return String.class;
 		case 3:
-			return String.class;
-		case 4:
 			return Category.class;
+		case 4:
+			return String.class;
 		case 5:
 			return String.class;
 		case 6:
@@ -124,8 +162,6 @@ public class RankTableModel extends DefaultTableModel {
 		case 7:
 			return String.class;
 		case 8:
-			return String.class;
-		case 9:
 			return String.class;
 		}
 		return Object.class;
