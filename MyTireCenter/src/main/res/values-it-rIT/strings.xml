@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Location permission message -->
+    <string name="permission_reason_title">Permesso Posizione</string>
+    <string name="permission_reason_message">Questo permesso è neceessario per localizzare i gommisti nelle vicinanze.</string>
+    <string name="no_location_permission_title">Attenzione!</string>
+    <string name="no_location_permission_message">Senza il permesso della Posizione non sarà possibile visualizzare la mappa.</string>
+
+    <!-- Main menu options -->
+    <string name="action_settings">Impostazioni</string>
+    <string name="action_favourite">Gommisti favoriti</string>
+    <string name="action_nearest_tire_centers">Gommisti nelle vicinzanze</string>
+    <string name="action_search_tire_center">Cerca gommista</string>
+
+    <!-- Favourite tire centers message -->
+    <string name="added_to_favourite">Aggiunto ai preferiti!</string>
+    <string name="removed_from_favourite">Rimosso dai preferiti!</string>
+    <string name="tire_centers_cleared">Gommisti preferiti cancellati!</string>
+
+    <!-- Map -->
+    <string name="my_position">Io sono qui!</string>
+    <string name="my_position_snippet">Questa è la mia posizione!</string>
+    <string name="address">Indirizzo: </string>
+
+    <!-- Tire center details information -->
+    <string name="fragment_tire_center_details_name">Nome: </string>
+    <string name="fragment_tire_center_details_address">Indirizzo: </string>
+    <string name="fragment_tire_center_details_telephone">Numero di telefono: </string>
+
+    <!-- Settings configuration -->
+    <string name="config_data_title">Configurazione impostazioni</string>
+    <string name="other_settings">Altre impostazioni</string>
+    <string name="clear_favourite_title">Elimina gommisti preferiti</string>
+    <string name="clear_favourite_summary">Cancella tutti i gommisti preferiti</string>
+    <string name="preferences_map_type_title">Tipo di mappa</string>
+    <string name="preferences_map_type_summary">Selezionare il tipo di mappa</string>
+    <string name="preferences_map_type_hybrid">Ibrida</string>
+    <string name="preferences_map_type_normal">Normale</string>
+    <string name="preferences_map_type_satellite">Satellitare</string>
+    <string name="preferences_map_type_terrain">Terrestre</string>
+
+</resources>

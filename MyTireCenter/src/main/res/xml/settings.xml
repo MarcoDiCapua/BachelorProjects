@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/config_data_title">
+        <Preference
+            android:key="clear_favourite"
+            android:defaultValue="false"
+            android:persistent="false"
+            android:icon="@android:drawable/btn_star_big_on"
+            android:title="@string/clear_favourite_title"
+            android:summary="@string/clear_favourite_summary"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/other_settings">
+        <ListPreference
+            android:defaultValue="1"
+            android:dialogTitle="@string/preferences_map_type_title"
+            android:entries="@array/map_type_labels"
+            android:entryValues="@array/map_type_values"
+            android:key="map_type"
+            android:summary="@string/preferences_map_type_summary"
+            android:icon="@android:drawable/ic_menu_mapmode"
+            android:title="@string/preferences_map_type_title"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

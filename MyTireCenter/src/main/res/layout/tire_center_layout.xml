@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/list_row_margin"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="horizontal">
+
+    <com.example.filip.mytirecenter.widget.TireCenterTextFAB
+        android:id="@+id/tire_center_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/indicator_fab_margin"
+        android:padding="@dimen/row_padding"
+        app:backgroundTint="@color/indicator_bg"
+        app:fabSize="mini"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/row_padding"
+        android:layout_marginStart="@dimen/row_padding"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tire_center_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:ellipsize="end"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/tire_center_name_text_size"
+            android:textStyle="bold"/>
+
+        <com.example.filip.mytirecenter.widget.DecoratedTextView
+            android:id="@+id/tire_center_address"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/null_height"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/tire_center_destination_text_size"/>
+
+    </LinearLayout>
+</LinearLayout>

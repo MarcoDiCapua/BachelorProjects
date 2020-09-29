@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+    <item
+        android:id="@+id/nearest_tire_centers"
+        android:checkable="true"
+        android:icon="@drawable/ic_my_location"
+        android:orderInCategory="100"
+        android:title="@string/action_nearest_tire_centers"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/search_tire_center"
+        android:checkable="true"
+        android:icon="@drawable/ic_search"
+        android:orderInCategory="100"
+        android:title="@string/action_search_tire_center"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/settings"
+        android:checkable="true"
+        android:icon="@drawable/ic_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/favourite"
+        android:checkable="true"
+        android:icon="@android:drawable/btn_star_big_on"
+        android:orderInCategory="100"
+        android:title="@string/action_favourite"
+        app:showAsAction="ifRoom"/>
+
+</menu>

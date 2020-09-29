@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.filip.mytirecenter.fragments.TireCenterDetailsFragment">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/light_grey"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:logo="@mipmap/ic_launcher"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="@string/fragment_tire_center_details_title"
+        />
+
+    <ImageView
+        android:id="@+id/favouriteImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginRight="@dimen/details_margin"
+        android:layout_marginEnd="@dimen/details_margin"
+        android:contentDescription="@string/favourite_image"
+        android:src="@android:drawable/btn_star_big_off" />
+
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/details_margin"
+        android:textSize="@dimen/details_text_size"
+        android:text="@string/fragment_tire_center_details_name" />
+
+    <TextView
+        android:id="@+id/textViewAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/details_margin"
+        android:textSize="@dimen/details_text_size"
+        android:text="@string/fragment_tire_center_details_address" />
+
+    <TextView
+        android:id="@+id/textViewPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/details_margin"
+        android:textSize="@dimen/details_text_size"
+        android:text="@string/fragment_tire_center_details_telephone" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/details_divider_height"
+        android:background="@android:color/background_dark" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tire_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/tire_layout" />
+
+</LinearLayout>

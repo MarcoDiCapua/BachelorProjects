@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.filip.mytirecenter.fragments.FragmentEmptyDetails">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/light_grey"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:logo="@mipmap/ic_launcher"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="@string/fragment_tire_center_details_title"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/tire_image"
+            android:layout_width="@dimen/splash_size"
+            android:layout_height="@dimen/splash_size"
+            android:layout_gravity="center"
+            android:contentDescription="@string/tire_image"
+            android:src="@drawable/splash_image" />
+    </FrameLayout>
+
+</LinearLayout>
