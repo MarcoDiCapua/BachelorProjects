@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="jar" name="schooLib">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <!--define folder properties-->
+    <property name="dir.buildfile" value="."/>
+    <property name="dir.jarfile" value="${dir.buildfile}/jar"/>
+
+    <path id="classpath">
+        <fileset dir="lib">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <target name="compile" description="Compile source">
+        <mkdir dir="bin" />
+        <javac srcdir="src" includes="**" destdir="bin" includeantruntime="false">
+            <classpath refid="classpath"/>
+        </javac>
+        <copy todir="bin">
+            <fileset dir="src" />
+        </copy>
+    </target>
+    
+    <target name="jar" depends="compile">
+
+        <jar destfile="${dir.jarfile}/serSchooLib.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="ServerMain"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="lib/javax.mail.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="lib/postgresql-42.1.1.jar"/>
+        </jar>
+
+        <jar destfile="${dir.jarfile}/appLibrarian.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="AppLibrarianMain"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="bin"/>
+            <fileset dir="resources"/>
+            <zipfileset excludes="META-INF/*.SF" src="lib/javax.mail.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="lib/postgresql-42.1.1.jar"/>
+        </jar>
+
+        <jar destfile="${dir.jarfile}/appReader.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="AppReaderMain"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="bin"/>
+            <fileset dir="resources"/>
+            <zipfileset excludes="META-INF/*.SF" src="lib/javax.mail.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="lib/postgresql-42.1.1.jar"/>
+        </jar>
+
+	<copy todir="${dir.buildfile}/jar">	<fileset dir="${dir.buildfile}/resources">	 <include name="config.txt" />		</fileset>	</copy> 	 </target>
+    
+    <target name="doc" description="generate documentation">
+        <delete dir="JavaDoc" />
+        <mkdir dir="JavaDoc" />
+        <javadoc destdir="JavaDoc">
+            <fileset dir="src" />
+        </javadoc>
+    </target>
+    
+</project>
